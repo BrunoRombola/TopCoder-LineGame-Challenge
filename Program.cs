@@ -1,4 +1,3 @@
-﻿
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,99 +24,96 @@ namespace TOPCODER
         }
         public void Move(int[] startPos,int[] endPos){
             int[] aux = new int[2];
-            bool wasBreak = false;
             while(startPos[0] != endPos[0] || startPos[1]!= endPos[1]){
-                if(startPos[0] > endPos[0]){
-                    for(int i = startPos[0]-1; i < startPos[0]+1; i++){
-                        if(startPos[1] > endPos[1]){
-                            for(int j = startPos[1]-1; j < startPos[1]+1; j++){
-                                Console.WriteLine("{0},{1}",i,j);
-                                if(colors[i,j] == 0){
-                                    aux[0] = i;
-                                    aux[1] = j;
-                                    wasBreak = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else{ 
-                           for(int j = startPos[1]+1; j > startPos[1]-1; j--){
-                                Console.WriteLine("{0},{1}",i,j);
-                                if(colors[i,j] == 0){
-                                    aux[0] = i;
-                                    aux[1] = j;
-                                    wasBreak = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(wasBreak){break;}
-                    }
-                }
-                else{
-                    for(int i = startPos[0]+1; i < startPos[0]-1; i--){
-                        if(startPos[1] > endPos[1]){
-                            for(int j = startPos[1]-1; j < startPos[1]+1; j++){
-                                Console.WriteLine("{0},{1}",i,j);
-                                if(colors[i,j] == 0){
-                                    aux[0] = i;
-                                    aux[1] = j;
-                                    wasBreak = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else{ 
-                           for(int j = startPos[1]+1; j > startPos[1]-1; j--){
-                                Console.WriteLine("{0},{1}",i,j);
-                                if(colors[i,j] == 0){
-                                    aux[0] = i;
-                                    aux[1] = j;
-                                    wasBreak = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(wasBreak){break;}
-                    }
-                }             
-                if(startPos[0] == endPos[0]){
-                    for(int i = startPos[0]-1; i < startPos[0]+1; i++){
-                        if(startPos[1] > endPos[1]){
-                            for(int j = startPos[1]-1; j < startPos[1]+1; j++){
-                                Console.WriteLine("{0},{1}",i,j);
-                                if(colors[i,j] == 0){
-                                    aux[0] = i;
-                                    aux[1] = j;
-                                    wasBreak = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else{ 
-                           for(int j = startPos[1]+1; j > startPos[1]-1; j--){
-                                Console.WriteLine("{0},{1}",i,j);
-                                if(colors[i,j] == 0){
-                                    aux[0] = i;
-                                    aux[1] = j;
-                                    wasBreak = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(wasBreak){break;}
-                    }
-                }
-                
+                aux = NextPos(startPos,endPos);
                 Console.WriteLine("aux = ({0},{1})",aux[0]+1,aux[1]+1);
                 MoveOne(startPos,aux);
                 startPos[0] = aux[0];
                 startPos[1] = aux[1];
-                wasBreak = false;
                 ShowBoardContent();
                 Console.WriteLine();
                 Console.ReadLine();
             }  
+        }
+        public int[] NextPos(int[] startPos, int[] endPos){
+            Console.WriteLine("Ingresó a NextPos");
+            if(startPos[1] == endPos[1]){
+                if(startPos[0] > endPos[0]){
+                        for(int j = startPos[0]-1; j < startPos[0]+1; j++){
+                            Console.WriteLine("Ingresó a NextPos 1 if 1 if" );
+                            if(colors[j,startPos[1]] == 0){
+                                return new int[]{startPos[0],j};    
+                            }
+                        }
+                    }
+                else{ 
+                   for(int j = startPos[0]+1; j > startPos[0]-1; j--){
+                        Console.WriteLine("Ingresó a NextPos 1 if 2 if" );
+                        if(colors[j,startPos[1]] == 0){
+                            return new int[]{startPos[0],j};    
+                        }
+                    }
+                }
+            }
+            else if(startPos[0] == endPos[0]){
+                if(startPos[1] > endPos[1]){
+                        for(int j = startPos[1]-1; j < startPos[1]+1; j++){
+                            Console.WriteLine("Ingresó a NextPos 2 if 1 if" );
+                            if(colors[startPos[0],j] == 0){
+                                return new int[]{startPos[0],j};    
+                            }
+                        }
+                    }
+                else{ 
+                   for(int j = startPos[1]+1; j > startPos[1]-1; j--){
+                        Console.WriteLine("Ingresó a NextPos 2 if 2 if" );
+                        if(colors[startPos[0],j] == 0){
+                            return new int[]{startPos[0],j};    
+                        }
+                    }
+                }
+            }
+            else if(startPos[0] < endPos[0]){
+                for(int i = startPos[0]+1; i < startPos[0]-1; i--){
+                    if(startPos[1] > endPos[1]){
+                        for(int j = startPos[1]-1; j < startPos[1]+1; j++){
+                            Console.WriteLine("Ingresó a NextPos 3 if 1 if" );
+                             if(colors[i,j] == 0){
+                                return new int[]{i,j};
+                            }
+                        }
+                    }
+                    else{ 
+                    for(int j = startPos[1]+1; j > startPos[1]-1; j--){
+                            Console.WriteLine("Ingresó a NextPos 3 if 2 if" );
+                            if(colors[i,j] == 0){
+                                return new int[]{i,j};    
+                            }
+                        }
+                    }
+                }
+            }
+            else  if(startPos[0] > endPos[0]){
+                for(int i = startPos[0]-1; i < startPos[0]+1; i++){
+                    if(startPos[1] > endPos[1]){
+                        for(int j = startPos[1]-1; j < startPos[1]+1; j++){
+                            Console.WriteLine("Ingresó a NextPos 4 if 1 if" );
+                             if(colors[i,j] == 0){
+                                return new int[]{i,j};
+                            }
+                        }
+                    }
+                    else{ 
+                       for(int j = startPos[1]+1; j > startPos[1]-1; j--){
+                            Console.WriteLine("Ingresó a NextPos 4 if 2 if" );
+                            if(colors[i,j] == 0){
+                                return new int[]{i,j};    
+                            }
+                        }
+                    }
+                }
+            }
+            return startPos;
         }
         public void MoveOne(int[] startPos,int[] endPos){
             
