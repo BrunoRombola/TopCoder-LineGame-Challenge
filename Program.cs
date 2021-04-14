@@ -13,6 +13,9 @@ namespace TOPCODER
             this.columns = columns;
             this.turn = 0;
             this.colors = new int[rows,columns];
+        }
+        public int Turn(){
+            return this.turn;
         }  
         public void ShowBoardContent(){
             for(int i = 0; i < colors.GetLength(0); i++){
@@ -37,79 +40,84 @@ namespace TOPCODER
         }
         public int[] NextPos(int[] startPos, int[] endPos){
             Console.WriteLine("Ingresó a NextPos");
-            if(startPos[1] == endPos[1]){
-                if(startPos[0] > endPos[0]){
-                        for(int j = startPos[0]-1; j < startPos[0]+1; j++){
-                            Console.WriteLine("Ingresó a NextPos 1 if 1 if" );
-                            if(colors[j,startPos[1]] == 0){
-                                return new int[]{startPos[0],j};    
-                            }
-                        }
-                    }
-                else{ 
-                   for(int j = startPos[0]+1; j > startPos[0]-1; j--){
-                        Console.WriteLine("Ingresó a NextPos 1 if 2 if" );
-                        if(colors[j,startPos[1]] == 0){
-                            return new int[]{startPos[0],j};    
-                        }
-                    }
-                }
-            }
-            else if(startPos[0] == endPos[0]){
+            if(startPos[0] == endPos[0]){
                 if(startPos[1] > endPos[1]){
-                        for(int j = startPos[1]-1; j < startPos[1]+1; j++){
-                            Console.WriteLine("Ingresó a NextPos 2 if 1 if" );
-                            if(colors[startPos[0],j] == 0){
-                                return new int[]{startPos[0],j};    
-                            }
-                        }
-                    }
-                else{ 
-                   for(int j = startPos[1]+1; j > startPos[1]-1; j--){
-                        Console.WriteLine("Ingresó a NextPos 2 if 2 if" );
-                        if(colors[startPos[0],j] == 0){
-                            return new int[]{startPos[0],j};    
-                        }
-                    }
-                }
-            }
-            else if(startPos[0] < endPos[0]){
-                for(int i = startPos[0]+1; i < startPos[0]-1; i--){
-                    if(startPos[1] > endPos[1]){
-                        for(int j = startPos[1]-1; j < startPos[1]+1; j++){
-                            Console.WriteLine("Ingresó a NextPos 3 if 1 if" );
-                             if(colors[i,j] == 0){
-                                return new int[]{i,j};
-                            }
-                        }
-                    }
-                    else{ 
-                    for(int j = startPos[1]+1; j > startPos[1]-1; j--){
-                            Console.WriteLine("Ingresó a NextPos 3 if 2 if" );
-                            if(colors[i,j] == 0){
-                                return new int[]{i,j};    
+                    for(int j = startPos[1] - 1; j <= startPos[1] + 1 || j <colors.GetLength(1); j++ ){
+                        if(colors[startPos[0],j] == 0){return new int[]{startPos[0],j};}
+                        else {
+                            if( startPos[0]-1 > 0)
+                                for(int i = startPos[0] - 1; i <= startPos[1] + 1 || i <colors.GetLength(0); i++ ){
+                                    if(colors[i,j] == 0){return new int[]{i,j};}
+                                }
+                            else{
+                                for(int i = startPos[0] + 1; i <= startPos[1] - 1 || i <colors.GetLength(0); i-- ){    
+                                    if(colors[i,j] == 0){return new int[]{i,j};}
+                                }
                             }
                         }
                     }
                 }
-            }
-            else  if(startPos[0] > endPos[0]){
-                for(int i = startPos[0]-1; i < startPos[0]+1; i++){
-                    if(startPos[1] > endPos[1]){
-                        for(int j = startPos[1]-1; j < startPos[1]+1; j++){
-                            Console.WriteLine("Ingresó a NextPos 4 if 1 if" );
-                             if(colors[i,j] == 0){
-                                return new int[]{i,j};
+                else{
+                    for(int j = startPos[1] + 1; j <= startPos[1] - 1 || j >= 0; j-- ){
+                        if(colors[startPos[0],j] == 0){return new int[]{startPos[0],j};}
+                        else {
+                            if( startPos[0]-1 > 0)
+                                for(int i = startPos[0] - 1; i <= startPos[1] + 1 || i <colors.GetLength(0); i++ ){
+                                    if(colors[startPos[0],j] == 0){return new int[]{i,j};}
+                                }
+                            else{
+                                for(int i = startPos[0] + 1; i <= startPos[1] - 1 || i <colors.GetLength(0); i-- ){    
+                                    if(colors[startPos[0],j] == 0){return new int[]{i,j};}
+                                }
                             }
                         }
                     }
-                    else{ 
-                       for(int j = startPos[1]+1; j > startPos[1]-1; j--){
-                            Console.WriteLine("Ingresó a NextPos 4 if 2 if" );
-                            if(colors[i,j] == 0){
-                                return new int[]{i,j};    
+                }
+            } 
+            else if(startPos[1] == endPos[1]){
+                if(startPos[0] > endPos[0]){
+                    for(int i = startPos[0] - 1; i <= startPos[0] + 1 || i <colors.GetLength(0); i++ ){
+                        if(colors[i,startPos[1]] == 0){return new int[]{i,startPos[1]};}
+                        else {
+                            if( startPos[0]-1 > 0)
+                                for(int j = startPos[1] - 1; j <= startPos[1] + 1 || j <colors.GetLength(1); j++ ){
+                                    if(colors[i,j] == 0){return new int[]{i,j};}
+                                }
+                            else{
+                                for(int j = startPos[1] + 1; j <= startPos[1] - 1 || j <colors.GetLength(1); j-- ){    
+                                    if(colors[i,j] == 0){return new int[]{i,j};}
+                                }
                             }
                         }
+                    }
+                }
+                else{
+                    for(int i = startPos[0] + 1; i <= startPos[0] - 1 || i >= 0; i-- ){
+                        if(colors[i,startPos[1]] == 0){return new int[]{i,startPos[1]};}
+                    }
+                }
+            }
+            if(startPos[0] > endPos[0]){
+                if(startPos[1] > endPos[1]){
+                    for(int j = startPos[1] - 1; j <= startPos[1] + 1 || j <colors.GetLength(1); j++ ){
+                        if(colors[startPos[0],j] == 0){return new int[]{startPos[0],j};}
+                    }
+                }
+                else{
+                    for(int j = startPos[1] + 1; j <= startPos[1] - 1 || j >= 0; j-- ){
+                        if(colors[startPos[0],j] == 0){return new int[]{startPos[0],j};}
+                    }
+                }
+            }
+            if(startPos[0] < endPos[0]){
+                if(startPos[1] > endPos[1]){
+                    for(int j = startPos[1] - 1; j <= startPos[1] + 1 || j <colors.GetLength(1); j++ ){
+                        if(colors[startPos[0],j] == 0){return new int[]{startPos[0],j};}
+                    }
+                }
+                else{
+                    for(int j = startPos[1] + 1; j <= startPos[1] - 1 || j >= 0; j-- ){
+                        if(colors[startPos[0],j] == 0){return new int[]{startPos[0],j};}
                     }
                 }
             }
@@ -137,6 +145,42 @@ namespace TOPCODER
             this.turn++;
 
         }
+        public bool IsLine(){
+            for(int i = 0; i< colors.GetLength(0); i++){
+                for(int j = 0; j < colors.GetLength(1); j++)
+                if(HorizontalLine(i,j,colors[i,j]) == 5){ return true;}
+                else if( VerticalLine(i,j,colors[i,j]) == 5){ return true;}
+                else if(DiagonalLine(i,j,colors[i,j]) == 5) {return true;}
+            }
+            return false;
+        }
+        public int DiagonalLine(int iIndex,int jIndex, int color){
+            int counter = 1;
+            for(int i = iIndex +1; i < iIndex + 5 || i < colors.GetLength(0); i++){
+                for(int j = jIndex + 1; j < jIndex +5 || j < colors.GetLength(1); j++){
+                    if(colors[i,j] == color){counter++;}else{counter = 1; break;}
+                }
+            }
+            for(int i = iIndex +1; i < iIndex + 5 || i < colors.GetLength(0) || counter < 5; i++){
+                for(int j = jIndex -1 ; j < jIndex - 5 || j > 0; j--){
+                    if(colors[i,j] == color){counter++;}else{counter = 1; break;}
+                }
+            }
+            return counter;
+        }
+        public int VerticalLine(int iIndex,int jIndex,int color){
+            int counter = 1;
+            int i = iIndex +1 ;
+            while( i < iIndex + 5 || i < colors.GetLength(0)){if(colors[i,jIndex] == color){counter++; i++;}else{counter = 0; break;}}            
+            return counter;
+        }
+        public int HorizontalLine(int iIndex,int jIndex,int color){
+            int counter = 1;
+            int i = jIndex +1 ;
+            while( i < jIndex + 5 || i < colors.GetLength(1)){if(colors[iIndex,i] == color){counter++; i++;}else{counter = 0; break;}}            
+            return counter;
+        } 
+        
     }
     class Program
     {
@@ -149,10 +193,14 @@ namespace TOPCODER
         }
         public static void Main(){
             Board board = new Board(6,6);
-            board.NewTurn();
-            board.ShowBoardContent();
-            board.Move(SelectElem(),SelectElem());
-            Console.WriteLine("Final");
+            int points = 0;
+            do{
+                board.NewTurn();
+                board.ShowBoardContent();
+                board.Move(SelectElem(),SelectElem());
+            //   if(board.IsLine()){points ++;}
+            }while(board.Turn() < 4);
+            Console.WriteLine("You score is {0}", points);
             board.ShowBoardContent();
         }
     }
